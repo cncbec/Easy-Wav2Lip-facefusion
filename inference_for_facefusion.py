@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 import sys
-sys.path.append('/content/Easy-Wav2Lip-facehandle/facefusion_wav/')
+import inspect
+
+sys.path.append(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + '/facefusion_wav/')
+
 
 print('\rloading facefusion', end='')
 #from facefusion_wav.facefusion import core_wav2lip
