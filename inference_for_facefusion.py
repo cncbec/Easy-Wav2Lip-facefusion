@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
+
+print('\rloading os          ', end='')
+import os
+
 import sys
 import inspect
-
-sys.path.append(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + '/facefusion_wav/')
-
+print(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))))
+sys.path.append('/content/Easy-Wav2Lip-facehandle/facefusion-wav2lip/'.format(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 
 print('\rloading facefusion', end='')
 #from facefusion_wav.facefusion import core_wav2lip
@@ -23,8 +26,7 @@ import argparse
 print('\rloading math        ', end='')
 import math
 
-print('\rloading os          ', end='')
-import os
+
 
 print('\rloading subprocess  ', end='')
 import subprocess
