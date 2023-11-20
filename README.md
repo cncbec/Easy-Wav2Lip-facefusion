@@ -1,5 +1,5 @@
 ## 符合Wav2Lip+facefusion更改说明
-* 防止与facefusion带有--face的参数冲突，这里把--face改为--lianmian，使用示例：python inference.py --lianmian xxx.mp4 --audio xxx.wav
+* 防止与facefusion带有--face的参数冲突，这里把--face改为--lianmian，使用示例：python inference_for_facefusion.py --lianmian xxx.mp4 --audio xxx.wav
 
 ## Easy-Wav2Lip improves Wav2Lip video lipsyncing making it:
 
