@@ -1,6 +1,10 @@
-print('\rloading facefusion', end='')
-from facefusion.facefusion import core_wav2lip
+#!/usr/bin/env python3
+import sys
+sys.path.append('/content/Easy-Wav2Lip-facehandle/facefusion_wav/')
 
+print('\rloading facefusion', end='')
+#from facefusion_wav.facefusion import core_wav2lip
+from facefusion.wavtwolip import cli
 print('\rloading torch       ', end='')
 import torch
 
@@ -70,7 +74,7 @@ parser.add_argument('--checkpoint_path', type=str,
 parser.add_argument('--segmentation_path', type=str, default="checkpoints/face_segmentation.pth",
                     help='Name of saved checkpoint of segmentation network', required=False)
 
-parser.add_argument('--face', type=str,
+parser.add_argument('--lianmian', type=str,
                     help='Filepath of video/image that contains faces to use', required=True)
 parser.add_argument('--audio', type=str,
                     help='Filepath of video/audio file to use as raw audio source', required=True)
@@ -544,20 +548,20 @@ def main():
     args.img_size = 96
     frame_number = 11
 
-    if os.path.isfile(args.face) and args.face.split('.')[1] in ['jpg', 'png', 'jpeg']:
+    if os.path.isfile(args.lianmian) and args.lianmian.split('.')[1] in ['jpg', 'png', 'jpeg']:
         args.static = True
 
-    if not os.path.isfile(args.face):
+    if not os.path.isfile(args.lianmian):
         raise ValueError('--face argument must be a valid path to video/image file')
 
-    elif args.face.split('.')[1] in ['jpg', 'png', 'jpeg']:
-        full_frames = [cv2.imread(args.face)]
+    elif args.lianmian.split('.')[1] in ['jpg', 'png', 'jpeg']:
+        full_frames = [cv2.imread(args.lianmian)]
         fps = args.fps
 
     else:
         if args.fullres != 1:
             print('Resizing video...')
-        video_stream = cv2.VideoCapture(args.face)
+        video_stream = cv2.VideoCapture(args.lianmian)
         fps = video_stream.get(cv2.CAP_PROP_FPS)
 
         full_frames = []
@@ -687,7 +691,7 @@ def main():
             # else:
             #     out.write(f)
     #对所有帧频进行处理
-    core_wav2lip.cli(all_fps, execution-thread-count=12,execution-queue-count=1,execution-providers="cuda",frame-processors='face_enhancer')
+    cli(all_fps, 12, 1, "cuda", 'face_enhancer')
     out.release()
 
     if str(args.preview_settings) == 'False':
