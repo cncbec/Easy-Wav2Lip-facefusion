@@ -1,3 +1,6 @@
+## 符合Wav2Lip+facefusion更改说明
+* 防止与facefusion带有--face的参数冲突，这里把--face改为--lianmian
+
 ## Easy-Wav2Lip improves Wav2Lip video lipsyncing making it:
 
 ## Easier:
