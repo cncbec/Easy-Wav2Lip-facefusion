@@ -10,7 +10,7 @@ sys.path.append('/content/Easy-Wav2Lip-facehandle/facefusion-wav2lip/'.format(os
 
 print('\rloading facefusion', end='')
 #from facefusion_wav.facefusion import core_wav2lip
-from facefusion.wavtwolip import cli
+from facefusion.core_wav2lip import cli
 print('\rloading torch       ', end='')
 import torch
 
