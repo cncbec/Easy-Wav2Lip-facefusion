@@ -687,7 +687,7 @@ def main():
             # else:
             #     out.write(f)
     #对所有帧频进行处理
-    core_wav2lip.cli(all_fps, execution-thread-count=12,execution-queue-count=1,execution-providers="gpu")
+    core_wav2lip.cli(all_fps, execution-thread-count=12,execution-queue-count=1,execution-providers="cuda",frame-processors='face_enhancer')
     out.release()
 
     if str(args.preview_settings) == 'False':
