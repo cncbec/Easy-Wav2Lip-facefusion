@@ -6,7 +6,7 @@ import os
 import sys
 import inspect
 print(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))))
-sys.path.append('/content/Easy-Wav2Lip-facehandle/facefusion-wav2lip/'.format(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
+sys.path.append('{}/facefusion-wav2lip/'.format(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 
 print('\rloading facefusion', end='')
 #from facefusion_wav.facefusion import core_wav2lip
