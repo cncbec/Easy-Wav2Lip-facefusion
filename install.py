@@ -8,7 +8,7 @@ from easy_functions import (format_time,
                             load_file_from_url,
                             load_model,
                             load_predictor)
-from enhance import load_sr
+#from enhance import load_sr
 
 parser = argparse.ArgumentParser(description='Install Easy-Wav2Lip')
 
@@ -32,12 +32,12 @@ load_file_from_url(
 model = load_model(os.path.join(working_directory,'checkpoints','Wav2Lip.pth'))
 print('wav2lip loaded')
 
-#download gfpgan files
-print("downloading gfpgan essentials")
-load_file_from_url(
-  url='https://github.com/anothermartz/Easy-Wav2Lip/releases/download/Prerequesits/GFPGANv1.4.pth',
-  model_dir='checkpoints', progress=True, file_name='GFPGANv1.4.pth')
-load_sr()
+# #download gfpgan files
+# print("downloading gfpgan essentials")
+# load_file_from_url(
+#   url='https://github.com/anothermartz/Easy-Wav2Lip/releases/download/Prerequesits/GFPGANv1.4.pth',
+#   model_dir='checkpoints', progress=True, file_name='GFPGANv1.4.pth')
+# load_sr()
 
 #load face detectors
 print('initializing face detectors')
