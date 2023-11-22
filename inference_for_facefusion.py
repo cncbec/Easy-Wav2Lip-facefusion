@@ -59,11 +59,6 @@ print('\rloading warnings    ', end='')
 import warnings
 
 warnings.filterwarnings("ignore", category=UserWarning, module='torchvision.transforms.functional_tensor')
-print('\rloading upscale     ', end='')
-from enhance import upscale
-
-print('\rloading load_sr     ', end='')
-from enhance import load_sr
 
 print('\rloading load_model  ', end='')
 from easy_functions import load_model
@@ -141,7 +136,7 @@ parser.add_argument('--mask_dilation', default=150, type=float,
 parser.add_argument('--mask_feathering', default=151, type=int,
                     help='amount of feathering of mask around mouth', required=False)
 
-parser.add_argument('--quality', type=str, help='Choose between Fast, Improved, Enhanced and Experimental',
+parser.add_argument('--quality', type=str, help='Choose between Fast, Improved,
                     default='Fast')
 
 with open(os.path.join('checkpoints', 'predictor.pkl'), 'rb') as f:
@@ -641,9 +636,7 @@ def main():
 
             if not args.quality == 'Fast':
                 print(f"mask size: {args.mask_dilation}, feathering: {args.mask_feathering}")
-                if not args.quality == 'Improved':
-                    print("Loading", args.sr_model)
-                    run_params = load_sr()
+
 
             print("Starting...")
             frame_h, frame_w = full_frames[0].shape[:-1]
@@ -661,18 +654,14 @@ def main():
         for p, f, c in zip(pred, frames, coords):
             y1, y2, x1, x2 = c
 
-            if str(
-                    args.debug_mask) == 'True' and args.quality != "Experimental":  # makes the background black & white so you can see the mask better
-                f = cv2.cvtColor(f, cv2.COLOR_BGR2GRAY)
-                f = cv2.cvtColor(f, cv2.COLOR_GRAY2BGR)
+
             of = f
             p = cv2.resize(p.astype(np.uint8), (x2 - x1, y2 - y1))
             cf = f[y1:y2, x1:x2]
 
-            if args.quality == 'Enhanced':
-                p = upscale(p, run_params)
 
-            if args.quality in ['Enhanced', 'Improved']:
+
+            if args.quality in ['Improved']:
                 if str(args.mouth_tracking) == 'True':
                     for i in range(len(frames)):
                         p, last_mask = create_tracked_mask(p, cf)
