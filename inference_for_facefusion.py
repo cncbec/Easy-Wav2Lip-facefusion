@@ -136,8 +136,8 @@ parser.add_argument('--mask_dilation', default=150, type=float,
 parser.add_argument('--mask_feathering', default=151, type=int,
                     help='amount of feathering of mask around mouth', required=False)
 
-parser.add_argument('--quality', type=str, help='Choose between Fast, Improved,
-                    default='Fast')
+parser.add_argument('--quality', type=str, help='Choose between Fast, Improved',default='Fast')
+
 
 with open(os.path.join('checkpoints', 'predictor.pkl'), 'rb') as f:
     predictor = pickle.load(f)
