@@ -639,9 +639,9 @@ def main():
 
 
             print("Starting...")
-            frame_h, frame_w = full_frames[0].shape[:-1]
-            fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # Be sure to use lower case
-            out = cv2.VideoWriter('temp/result.mp4', fourcc, fps, (frame_w, frame_h))
+            #frame_h, frame_w = full_frames[0].shape[:-1]
+            #fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # Be sure to use lower case
+            #out = cv2.VideoWriter('temp/result.mp4', fourcc, fps, (frame_w, frame_h))
 
         img_batch = torch.FloatTensor(np.transpose(img_batch, (0, 3, 1, 2))).to('cuda')
         mel_batch = torch.FloatTensor(np.transpose(mel_batch, (0, 3, 1, 2))).to('cuda')
@@ -670,9 +670,16 @@ def main():
                         p, last_mask = create_mask(p, cf)
 
             f[y1:y2, x1:x2] = p
+            
+            # all_fps.append(f)
+            #列表存储，改为jpg存储
+            current_path = os.path.dirname(os.path.abspath(__file__))
+            temp_images_path =os.path.join(current_path, r'temp/images')
+            if not os.path.exists(temp_images_path):
+                os.makedirs(temp_images_path)
+            cv2.imwrite(os.path.join(temp_images_path,'{}.jpg'.format(inddd)), f)
             # cv2.imwrite('temp/p.jpg', f)
-            all_fps.append(f)
-            #cv2.imwrite('temp/f-{}.jpg'.format(inddd), f)
+            
 
             # if args.quality == 'Experimental':
             #     last_mask = None
@@ -685,12 +692,29 @@ def main():
             # else:
             #     out.write(f)
     #对所有帧频进行处理
-    result_all_frames = cli(all_fps, 12, 1, "cuda", 'face_enhancer')
-    for tuple_item in sorted(result_all_frames, key=lambda x: x[0]):
-        index, frame = tuple_item
-        out.write(frame)
-    out.release()
+    # result_all_frames = cli(all_fps, 12, 1, "cuda", 'face_enhancer')
+    # for tuple_item in sorted(result_all_frames, key=lambda x: x[0]):
+    #     index, frame = tuple_item
+    #     out.write(frame)
+    # out.release()
+    image_paths = sorted(glob.glob(os.path.join(temp_images_path, '*.png')) +
+                             glob.glob(os.path.join(temp_images_path, '*.jpg')))
+      # 读取第一张图以获取图像尺寸
+    img = cv2.imread(image_paths[0])
+    height, width, _ = img.shape
 
+    # 设置视频编解码器和输出文件格式
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # 你也可以使用其他编解码器，例如 'XVID'
+    out = cv2.VideoWriter("temp/result.mp4", fourcc, fps, (width, height))
+
+    # 逐一读取图片并写入视频
+    for image_path in image_paths:
+        img = cv2.imread(image_path)
+        out.write(img)
+
+    # 释放 VideoWriter 对象
+    out.release()
+  
     if str(args.preview_settings) == 'False':
         print("converting to final video")
 
