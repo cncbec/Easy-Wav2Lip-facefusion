@@ -1,6 +1,6 @@
 ## 符合Wav2Lip+facefusion更改说明
 * 防止与facefusion带有--face的参数冲突，这里把--face改为--lianmian，使用示例：python inference_for_facefusion.py --lianmian xxx.mp4 --audio xxx.wav
-* 不使用Easy-Wav2Lip的enhance和Experimental生成，则使用run_single.py，示例：python run_single.py --lianmian source/1.mp4 --audio source/1.wav --out_file result/out.mp4
+* 不使用Easy-Wav2Lip（官方）的enhance和Experimental，run.py生成。可以使用run_single.py，示例：python run_single.py --lianmian source/1.mp4 --audio source/1.wav --out_file result/out.mp4
 * 为结合facefusion，使用run_single_for_facefusion.py，示例：python run_single_for_facefusion.py --lianmian source/1.mp4 --audio source/1.wav --out_file result/out.mp4
 
 ## Easy-Wav2Lip improves Wav2Lip video lipsyncing making it:
