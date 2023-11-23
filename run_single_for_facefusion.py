@@ -20,7 +20,7 @@ def create_video(video_file,vocal_file,out_file):
     config = configparser.ConfigParser()
     config.read('config.ini')
 
-    quality = 'Improved'
+    quality = 'Fast'#如果Improved，生成的视频不要超过30秒，否则超出30秒部分嘴部会没有任何生成效果
     output_height = "full resolution" #或者"half resolution"
     wav2lip_version = "Wav2Lip_GAN"
     use_previous_tracking_data = True
