@@ -687,9 +687,8 @@ def main():
     #对所有帧频进行处理
     result_all_frames = cli(all_fps, 12, 1, "cuda", 'face_enhancer')
     for tuple_item in sorted(result_all_frames, key=lambda x: x[0]):
-        index, frame_array = tuple_item
-        out.write(frame_array)
-        print('写入到文件: {}'.format(index))
+        index, frame = tuple_item
+        out.write(frame)
     out.release()
 
     if str(args.preview_settings) == 'False':
