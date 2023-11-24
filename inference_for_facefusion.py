@@ -449,11 +449,12 @@ def get_smoothened_boxes(boxes, T):
 
 
 def face_detect(images, results_file='last_detected_face.pkl'):
-    # If results file exists, load it and return
-    if os.path.exists(results_file):
-        print('Using face detection data from last input')
-        with open(results_file, 'rb') as f:
-            return pickle.load(f)
+    #发现处理完一个视频，再处理下一个视频会报错，临时关掉加载last_detected_face.pkl文件
+    # # If results file exists, load it and return
+    # if os.path.exists(results_file):
+    #     print('Using face detection data from last input')
+    #     with open(results_file, 'rb') as f:
+    #         return pickle.load(f)
 
     results = []
     pady1, pady2, padx1, padx2 = args.pads
@@ -477,9 +478,10 @@ def face_detect(images, results_file='last_detected_face.pkl'):
     if str(args.nosmooth) == 'False': boxes = get_smoothened_boxes(boxes, T=5)
     results = [[image[y1: y2, x1:x2], (y1, y2, x1, x2)] for image, (x1, y1, x2, y2) in zip(images, boxes)]
 
-    # Save results to file
-    with open(results_file, 'wb') as f:
-        pickle.dump(results, f)
+    # #发现处理完一个视频，再处理下一个视频会报错，临时关掉加载last_detected_face.pkl文件
+    # # Save results to file
+    # with open(results_file, 'wb') as f:
+    #     pickle.dump(results, f)
 
     return results
 
@@ -627,19 +629,16 @@ def main():
     else:
         gen = datagen(full_frames.copy(), mel_chunks)
     #存储所有帧
-    all_fps = []
+    #all_fps = []
     for i, (img_batch, mel_batch, frames, coords) in enumerate(tqdm(
             gen,
             total=int(np.ceil(float(len(mel_chunks)) / batch_size)),
             desc="Processing Wav2Lip", ncols=100
     )):
-        print('第{}次处理'.format(i))
-        if i == 0:
 
+        if i == 0:
             if not args.quality == 'Fast':
                 print(f"mask size: {args.mask_dilation}, feathering: {args.mask_feathering}")
-
-
             print("Starting...")
             #frame_h, frame_w = full_frames[0].shape[:-1]
             #fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # Be sure to use lower case
@@ -656,12 +655,9 @@ def main():
         for p, f, c in zip(pred, frames, coords):
             y1, y2, x1, x2 = c
 
-
             of = f
             p = cv2.resize(p.astype(np.uint8), (x2 - x1, y2 - y1))
             cf = f[y1:y2, x1:x2]
-
-
 
             if args.quality in ['Improved']:
                 if str(args.mouth_tracking) == 'True':
