@@ -697,6 +697,7 @@ def main():
     #     index, frame = tuple_item
     #     out.write(frame)
     # out.release()
+    result_all_frames = cli(temp_images_path, 12, 1, "cuda", 'face_enhancer')
     image_paths = sorted(glob.glob(os.path.join(temp_images_path, '*.png')) +
                              glob.glob(os.path.join(temp_images_path, '*.jpg')))
       # 读取第一张图以获取图像尺寸
