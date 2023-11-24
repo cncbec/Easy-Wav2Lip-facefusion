@@ -2,10 +2,12 @@
 
 print('\rloading os          ', end='')
 import os
+import re
 import glob
 import sys
 import inspect
-print(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))))
+
+#加载第三方包
 sys.path.append('{}/facefusion-wav2lip/'.format(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 
 print('\rloading facefusion', end='')
@@ -698,8 +700,7 @@ def main():
     #     out.write(frame)
     # out.release()
     cli(temp_images_path, 12, 1, "cuda", 'face_enhancer')
-    image_paths = sorted(glob.glob(os.path.join(temp_images_path, '*.png')) +
-                             glob.glob(os.path.join(temp_images_path, '*.jpg')))
+    image_paths = from_file_get_images(temp_images_path)
       # 读取第一张图以获取图像尺寸
     img = cv2.imread(image_paths[0])
     height, width, _ = img.shape
@@ -737,6 +738,20 @@ def do_load(checkpoint_path):
     detector = RetinaFace(gpu_id=0, model_path="checkpoints/mobilenet.pth", network="mobilenet")
     detector_model = detector.model
 
+#获取目录内的图片并按照从小到大排序生成列表
+def from_file_get_images(path):
+	# Get a list of image files in the folder
+	image_files = [f for f in os.listdir(path) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
+
+	# Sort the image files based on their numeric part in the filename
+	image_paths = sorted(
+		image_files,
+		key=lambda s: [int(text) if text.isdigit() else text.lower() for text in re.split('([0-9]+)', s)]
+	)
+
+	# Create a list of full image paths
+	image_paths = [os.path.join(path, file) for file in image_paths]
+	return image_paths
 
 def face_rect(images):
     face_batch_size = 8
