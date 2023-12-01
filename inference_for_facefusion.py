@@ -717,7 +717,7 @@ def main():
         print("converting to final video")
 	#查看音频文件路径下有没有srt字幕文件，如果有，则合并音频、视频、字幕。如果没有则只合并视频和音频
         audio_path_part = os.path.dirname(args.audio)
-        srt_files = glob.glob(os.path.join(directory, '*.srt'))
+        srt_files = glob.glob(os.path.join(audio_path_part, '*.srt'))
         font_path = '思源黑体旧字形 Bold'
         if srt_files:
             ffmpeg_command = (
