@@ -725,7 +725,7 @@ def main():
         font_path = '思源黑体旧字形 Bold'
         if args.srt:
             ffmpeg_command = (
-            	f"ffmpeg -i 'temp/result.mp4' -i {args.audio} -vf subtitles={args.srt}:force_style='FontName=\"{font_path}\",FontSize=20,PrimaryColour=16777215,Alignment=2,OutlineColour=0,Outline=1,Shadow=0,BorderStyle=1,MarginL=10,MarginR=10,MarginV=10,LineSpacing=10' "
+            	f"ffmpeg -i 'temp/result.mp4' -i {args.audio} -vf \"subtitles={args.srt}:force_style='FontName=\\\"{font_path}\\\",FontSize=20,PrimaryColour=16777215,Alignment=2,OutlineColour=0,Outline=1,Shadow=0,BorderStyle=1,MarginL=10,MarginR=10,MarginV=10,LineSpacing=10'\" "
             	f"-c:v libx264 -c:a aac -b:a 192k -map 0:v -map 1:a {args.outfile}"
             )
             result = subprocess.check_call(ffmpeg_command, shell=True)
