@@ -15,7 +15,9 @@ from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 import configparser
 import argparse
 
-def create_video(video_file,vocal_file,out_file):
+#vocal_file，音频文件
+#srt,字幕文件
+def create_video(video_file,vocal_file,srt,out_file):
     # retrieve variables from config.ini
     config = configparser.ConfigParser()
     config.read('config.ini')
@@ -274,6 +276,7 @@ def create_video(video_file,vocal_file,out_file):
         "python", "inference_for_facefusion.py",
         "--lianmian", temp_input_video,
         "--audio", temp_input_audio,
+        "--srt", srt,
         "--outfile", temp_output,
         "--pads", str(pad_up), str(pad_down), str(pad_left), str(pad_right),
         "--checkpoint_path", checkpoint_path,
@@ -297,6 +300,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--lianmian', type=str, help='')
     parser.add_argument('--audio', type=str, help='')
+    parser.add_argument('--srt', type=str, help='')
     parser.add_argument('--out_file', type=str, help='')
     # parser.add_argument('--batch_size', type=int, default='20', help='');
     # parser.add_argument('--vshift', type=int, default='15', help='');
@@ -305,4 +309,4 @@ if __name__ == '__main__':
     # parser.add_argument('--reference', type=str, default="demo", help='');
 
     opt = parser.parse_args()
-    create_video(opt.lianmian,opt.audio,opt.out_file)
+    create_video(opt.lianmian,opt.audio,opt.srt,opt.out_file)
