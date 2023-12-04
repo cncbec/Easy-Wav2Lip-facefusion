@@ -82,7 +82,7 @@ parser.add_argument('--audio', type=str,
                     help='Filepath of video/audio file to use as raw audio source', required=True)
 
 parser.add_argument('--srt', type=str,
-                    help='Filepath of srt file to use as video's subtitle file', required=True)
+                    help='Filepath of srt file to use as video subtitle file', required=True)
 
 parser.add_argument('--outfile', type=str, help='Video path to save result. See default for an e.g.',
                     default='results/result_voice.mp4')
